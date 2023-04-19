@@ -12,7 +12,7 @@ export class App extends Component {
 
   getVisibleItems = () => {
     const {contacts, filter} = this.state;
-    return contacts.filter(({ name }) => name.toLowerCase().indexOf(filter) >= 0)
+    return contacts.filter(({ name }) => name.toLowerCase().includes(filter.toLowerCase()));
   }
 
   handleFilter = (text) => {
@@ -23,9 +23,9 @@ export class App extends Component {
 
   handleAddUser = (user) => {
 
-    const names = this.state.contacts.map(userItem => userItem.name);
+    const repeated = this.state.contacts.find(({ name }) => name === user.name);
 
-    if (names.includes(user.name)) {
+    if (repeated) {
       alert(`${user.name} is already in contacts`);
       return;
     }

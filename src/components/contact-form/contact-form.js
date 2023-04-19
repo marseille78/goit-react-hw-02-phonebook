@@ -14,14 +14,12 @@ class ContactForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.isValid()) return;
+    if (this.isInvalid()) return;
 
-    const {name, number} = this.state;
-
-    const user = {};
-    user.id = nanoid();
-    user.name = name;
-    user.number = number;
+    const user = {
+      id: nanoid(),
+      ...this.state,
+    };
 
     this.props.onAddUser(user);
 
@@ -40,7 +38,7 @@ class ContactForm extends Component {
     })
   }
 
-  isValid = () => {
+  isInvalid = () => {
     const {name, number} = this.state;
     return !(name.length > 0 && number.length > 0)
   }
@@ -83,7 +81,7 @@ class ContactForm extends Component {
             <button
               className={css.btn}
               type='submit'
-              disabled={this.isValid()}
+              disabled={this.isInvalid()}
             >
               Add contact
             </button>
